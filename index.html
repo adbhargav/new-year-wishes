@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New Year Wishes</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    /* General styles */
+    body {
+      background: linear-gradient(120deg, #ffafbd, #ffc3a0);
+      color: #333;
+      font-family: 'Arial', sans-serif;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-size: 3rem;
+      color: #333;
+    }
+
+    #output {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    /* Confetti styles */
+    @keyframes fireworks {
+      0% { transform: scale(1); opacity: 1; }
+      100% { transform: scale(2); opacity: 0; }
+    }
+
+    .confetti {
+      position: fixed;
+      width: 8px;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 50%;
+      animation: fireworks 2s ease-out infinite;
+      pointer-events: none;
+    }
+
+    /* Floating glowing animations */
+    @keyframes floating {
+      0% { transform: translateY(0px); opacity: 0.8; }
+      50% { transform: translateY(-20px); opacity: 1; }
+      100% { transform: translateY(0px); opacity: 0.8; }
+    }
+
+    .glow {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      background: rgba(255, 223, 0, 0.9);
+      border-radius: 50%;
+      box-shadow: 0 0 15px rgba(255, 223, 0, 0.8);
+      animation: floating 3s ease-in-out infinite;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container text-center mt-5">
+    <h1 class="display-4">🎉 Happy New Year! 🎉</h1>
+    <p class="lead">Enter your name to receive your personalized wish from Bhargav Royal:</p>
+    <form id="wishForm">
+      <input type="text" id="userName" class="form-control mb-3" placeholder="Your Name" required>
+      <button type="submit" class="btn btn-primary btn-lg">Get Wishes</button>
+    </form>
+    <div id="output" class="mt-5"></div>
+  </div>
+
+  <script>
+    document.getElementById('wishForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const name = document.getElementById('userName').value.trim();
+
+      if (!name) {
+        alert("Please enter your name!");
+        return;
+      }
+
+      const quotes = [
+        "You have the power to make a positive difference this year!",
+        "Embrace the opportunities ahead, and stay amazing!",
+        "Your kindness and passion are your greatest strengths.",
+        "The world is a better place because you're in it!",
+        "Dream big and achieve greater heights this year!"
+      ];
+
+      const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+      const outputDiv = document.getElementById('output');
+
+      outputDiv.innerHTML = `
+        <p>🎆 Happy New Year, <strong>${name}</strong>! 🎆</p>
+        <p>${randomQuote}</p>
+        <p><em>With warm wishes and encouragement</em><br><strong>Bhargav Royal</strong></p>
+`;
+
+      // Add animations
+      launchConfetti();
+      spawnGlows();
+    });
+
+    // Function to launch confetti
+    function launchConfetti() {
+      for (let i = 0; i < 150; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`;
+        confetti.style.left = Math.random() * window.innerWidth + 'px';
+        confetti.style.top = Math.random() * window.innerHeight + 'px';
+        confetti.style.animationDuration = Math.random() + 1.5 + 's';
+        confetti.style.transform = `scale(${Math.random()})`;
+        document.body.appendChild(confetti);
+
+        setTimeout(() => confetti.remove(), 2000);
+      }
+    }
+
+    // Function to spawn glowing circles
+    function spawnGlows() {
+      for (let i = 0; i < 50; i++) {
+        const glow = document.createElement('div');
+        glow.className = 'glow';
+        glow.style.left = Math.random() * window.innerWidth + 'px';
+        glow.style.top = Math.random() * window.innerHeight + 'px';
+        glow.style.animationDuration = Math.random() * 2 + 2 + 's';
+        document.body.appendChild(glow);
+
+        setTimeout(() => glow.remove(), 4000);
+      }
+    }
+  </script>
+</body>
+</html>
